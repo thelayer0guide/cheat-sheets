@@ -2184,19 +2184,34 @@
 
     searchInput.addEventListener('input', render);
 
+    // Score: 3=name, 2=tags, 1=other content, 0=no match
+    function scoreCard(c, term) {
+      if ((c.dataset.title || '').toLowerCase().includes(term)) return 3;
+      const tagText = Array.from(c.querySelectorAll('.tag')).map(t => t.textContent.toLowerCase()).join(' ');
+      if (tagText.includes(term)) return 2;
+      if (c.textContent.toLowerCase().includes(term)) return 1;
+      return 0;
+    }
+
     function render() {
       const term = searchInput.value.toLowerCase().trim();
 
-      // 1. Which cards match?
+      // 1. Which cards match? Compute relevance score when searching.
       const visible = cards.filter(c => {
-        const matchSearch   = !term || c.textContent.toLowerCase().includes(term);
+        const score = term ? scoreCard(c, term) : 0;
+        c.dataset.score = score;
+        const matchSearch   = !term || score > 0;
         const matchGroup    = activeFilter === 'all' || c.dataset.group === activeFilter;
         const matchSubgroup = !activeSubgroup || (c.dataset.subgroups || '').split(' ').includes(activeSubgroup);
         return matchSearch && matchGroup && matchSubgroup;
       });
 
-      // 2. Sort
+      // 2. Sort — when searching, relevance score takes highest priority
       const sorted = [...visible].sort((a, b) => {
+        if (term) {
+          const sa = +a.dataset.score, sb = +b.dataset.score;
+          if (sa !== sb) return sb - sa;
+        }
         if (sortAZ) return a.dataset.title.localeCompare(b.dataset.title, 'de');
         // Default: grouped, then stable original order
         const ga = GROUP_ORDER.indexOf(a.dataset.group);

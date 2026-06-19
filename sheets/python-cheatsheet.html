@@ -931,6 +931,116 @@ dependencies = [
     <div class="tip purple">💡 <strong>uv</strong> als moderner, extrem schneller Ersatz für pip + venv empfohlen</div>
   </div>
 
+  <!-- UV -->
+  <div class="section theme-cyan">
+    <div class="section-header">
+      <div class="section-icon">🚀</div>
+      <div class="section-title">uv — Modernes Python-Tooling</div>
+    </div>
+    <div class="command-list">
+      <div class="cmd-entry">
+        <div class="cmd-desc">Projekt & Umgebung</div>
+        <code>uv init myproject        <span class="cm"># neues Projekt anlegen</span>
+uv venv .venv            <span class="cm"># venv erstellen (schnell!)</span>
+source .venv/bin/activate
+uv sync                  <span class="cm"># aus uv.lock installieren</span>
+uv lock                  <span class="cm"># lock-Datei aktualisieren</span></code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">Pakete verwalten</div>
+        <code>uv add requests          <span class="cm"># Abhängigkeit hinzufügen</span>
+uv add --dev pytest      <span class="cm"># Dev-Abhängigkeit</span>
+uv remove requests       <span class="cm"># entfernen</span>
+uv pip install numpy     <span class="cm"># pip-Ersatz (in venv)</span>
+uv pip list --outdated   <span class="cm"># veraltete Pakete</span></code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">Ausführen & Python-Versionen</div>
+        <code>uv run python script.py  <span class="cm"># in Projektenv ausführen</span>
+uv run pytest            <span class="cm"># Tool direkt starten</span>
+uvx ruff check .         <span class="cm"># Tool ohne install starten</span>
+uv python install 3.12   <span class="cm"># Python-Version installieren</span>
+uv python list           <span class="cm"># verfügbare Versionen</span></code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">pyproject.toml (uv-Stil)</div>
+        <code>[project]
+name = <span class="st">"myproject"</span>
+version = <span class="st">"0.1.0"</span>
+requires-python = <span class="st">">=3.11"</span>
+dependencies = [<span class="st">"requests>=2.28"</span>]
+
+[tool.uv]
+dev-dependencies = [<span class="st">"pytest"</span>, <span class="st">"ruff"</span>]</code>
+      </div>
+    </div>
+    <div class="tip cyan">💡 <strong>uv</strong> ist 10–100× schneller als pip und kombiniert venv + pip + pyenv in einem Tool</div>
+  </div>
+
+  <!-- PANDAS -->
+  <div class="section theme-blue">
+    <div class="section-header">
+      <div class="section-icon">🐼</div>
+      <div class="section-title">pandas — Datenanalyse</div>
+    </div>
+    <div class="command-list">
+      <div class="cmd-entry">
+        <div class="cmd-desc">Import & DataFrame erstellen</div>
+        <code><span class="kw">import</span> pandas <span class="kw">as</span> <span class="va">pd</span>
+<span class="kw">import</span> numpy  <span class="kw">as</span> <span class="va">np</span>
+
+<span class="va">df</span> <span class="op">=</span> pd.<span class="fn">DataFrame</span>({
+    <span class="st">"name"</span><span class="op">:</span>  [<span class="st">"Alice"</span>, <span class="st">"Bob"</span>],
+    <span class="st">"alter"</span><span class="op">:</span> [<span class="nu">30</span>, <span class="nu">25</span>],
+})
+<span class="va">df</span> <span class="op">=</span> pd.<span class="fn">read_csv</span>(<span class="st">"data.csv"</span>)
+<span class="va">df</span> <span class="op">=</span> pd.<span class="fn">read_excel</span>(<span class="st">"data.xlsx"</span>)
+<span class="va">df</span> <span class="op">=</span> pd.<span class="fn">read_json</span>(<span class="st">"data.json"</span>)</code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">Erkunden & Auswählen</div>
+        <code><span class="va">df</span>.<span class="fn">head</span>(<span class="nu">5</span>)   <span class="va">df</span>.<span class="fn">tail</span>(<span class="nu">3</span>)   <span class="va">df</span>.<span class="va">shape</span>
+<span class="va">df</span>.<span class="fn">info</span>()    <span class="va">df</span>.<span class="fn">describe</span>()
+<span class="va">df</span>[<span class="st">"name"</span>]              <span class="cm">  # Series (Spalte)</span>
+<span class="va">df</span>[[<span class="st">"name"</span>, <span class="st">"alter"</span>]]   <span class="cm">  # DataFrame</span>
+<span class="va">df</span>.<span class="fn">loc</span>[<span class="nu">0</span>]               <span class="cm">  # Zeile per Label</span>
+<span class="va">df</span>.<span class="fn">iloc</span>[<span class="nu">0</span>]              <span class="cm">  # Zeile per Index</span>
+<span class="va">df</span>[<span class="va">df</span>[<span class="st">"alter"</span>] <span class="op">&gt;</span> <span class="nu">25</span>]    <span class="cm">  # Filtern</span>
+<span class="va">df</span>.<span class="fn">query</span>(<span class="st">"alter > 25"</span>)  <span class="cm">  # Query-Syntax</span></code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">Transformieren</div>
+        <code><span class="va">df</span>[<span class="st">"neu"</span>] <span class="op">=</span> <span class="va">df</span>[<span class="st">"alter"</span>] <span class="op">*</span> <span class="nu">2</span>     <span class="cm">  # neue Spalte</span>
+<span class="va">df</span>.<span class="fn">rename</span>(<span class="va">columns</span><span class="op">=</span>{<span class="st">"alt"</span><span class="op">:</span> <span class="st">"neu"</span>})
+<span class="va">df</span>.<span class="fn">drop</span>(<span class="va">columns</span><span class="op">=</span>[<span class="st">"spalte"</span>])
+<span class="va">df</span>.<span class="fn">dropna</span>()                       <span class="cm">  # NaN entfernen</span>
+<span class="va">df</span>.<span class="fn">fillna</span>(<span class="nu">0</span>)                      <span class="cm">  # NaN ersetzen</span>
+<span class="va">df</span>.<span class="fn">astype</span>({<span class="st">"alter"</span><span class="op">:</span> <span class="tp">float</span>})
+<span class="va">df</span>[<span class="st">"name"</span>].<span class="fn">str</span>.<span class="fn">upper</span>()
+<span class="va">df</span>[<span class="st">"alter"</span>].<span class="fn">apply</span>(<span class="kw">lambda</span> <span class="va">x</span><span class="op">:</span> <span class="va">x</span><span class="op">+</span><span class="nu">1</span>)</code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">Aggregieren & Zusammenführen</div>
+        <code><span class="va">df</span>.<span class="fn">groupby</span>(<span class="st">"gruppe"</span>)[<span class="st">"wert"</span>].<span class="fn">mean</span>()
+<span class="va">df</span>.<span class="fn">pivot_table</span>(<span class="va">values</span><span class="op">=</span><span class="st">"wert"</span>,
+    <span class="va">index</span><span class="op">=</span><span class="st">"gruppe"</span>, <span class="va">aggfunc</span><span class="op">=</span><span class="st">"sum"</span>)
+pd.<span class="fn">merge</span>(<span class="va">df1</span>, <span class="va">df2</span>, <span class="va">on</span><span class="op">=</span><span class="st">"id"</span>)
+pd.<span class="fn">concat</span>([<span class="va">df1</span>, <span class="va">df2</span>], <span class="va">ignore_index</span><span class="op">=</span><span class="kw">True</span>)
+<span class="va">df</span>.<span class="fn">sort_values</span>(<span class="st">"alter"</span>, <span class="va">ascending</span><span class="op">=</span><span class="kw">False</span>)
+<span class="va">df</span>[<span class="st">"gruppe"</span>].<span class="fn">value_counts</span>()
+<span class="va">df</span>.<span class="fn">agg</span>({<span class="st">"alter"</span><span class="op">:</span> [<span class="st">"mean"</span>, <span class="st">"std"</span>]})</code>
+      </div>
+      <div class="cmd-entry">
+        <div class="cmd-desc">Export</div>
+        <code><span class="va">df</span>.<span class="fn">to_csv</span>(<span class="st">"out.csv"</span>, <span class="va">index</span><span class="op">=</span><span class="kw">False</span>)
+<span class="va">df</span>.<span class="fn">to_excel</span>(<span class="st">"out.xlsx"</span>)
+<span class="va">df</span>.<span class="fn">to_json</span>(<span class="st">"out.json"</span>, <span class="va">orient</span><span class="op">=</span><span class="st">"records"</span>)
+<span class="va">df</span>.<span class="fn">to_dict</span>(<span class="va">orient</span><span class="op">=</span><span class="st">"records"</span>)</code>
+      </div>
+    </div>
+    <div class="tip blue">💡 <strong>df.pipe()</strong> für Methoden-Ketten · <strong>pd.NA</strong> statt <strong>np.nan</strong> für nullable Integer</div>
+  </div>
+
 </main>
 
 <footer>
