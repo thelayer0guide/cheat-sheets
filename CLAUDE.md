@@ -107,17 +107,6 @@ let activeSubgroup = null;   // aktive Untergruppe (kontextsensitiv zur Hauptgru
 
 ---
 
-## Git-Workflow
-
-Remote: `git@github.com:RUFF1312/cheat-sheets.git`, Branch `main`
-
-Typische Commit-Struktur:
-- Feature (neues Sheet): `Add {Tool} cheat sheet + index integration`
-- Bugfix: `Fix {was} in {welche Sheets}`
-- Style: `Fix CSS style errors in N sheets`
-
----
-
 ## Gruppen und Zähler (Stand: 101 Sheets)
 
 | Gruppe | `data-group` | Anzahl | Subgruppen |
